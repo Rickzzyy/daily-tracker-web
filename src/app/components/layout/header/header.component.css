@@ -1,0 +1,9 @@
+.app-title {
+  margin: 0 0 0 1rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.menu-button {
+  margin-right: 0.5rem;
+}

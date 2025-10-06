@@ -1,0 +1,45 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Welcome to your daily tracker overview</p>
+  </div>
+
+  <div class="stats-grid">
+    <p-card header="Tasks" class="stat-card">
+      <div class="stat-content">
+        <div class="stat-number">{{ stats.tasksCompleted }}/{{ stats.totalTasks }}</div>
+        <div class="stat-label">Completed Today</div>
+        <p-progressBar [value]="taskProgress" class="progress-bar"></p-progressBar>
+      </div>
+    </p-card>
+
+    <p-card header="Habits" class="stat-card">
+      <div class="stat-content">
+        <div class="stat-number">{{ stats.habitsCompleted }}/{{ stats.totalHabits }}</div>
+        <div class="stat-label">Completed Today</div>
+        <p-progressBar [value]="habitProgress" class="progress-bar"></p-progressBar>
+      </div>
+    </p-card>
+
+    <p-card header="Time Tracked" class="stat-card">
+      <div class="stat-content">
+        <div class="stat-number">{{ timeTrackedHours }}h</div>
+        <div class="stat-label">Hours Today</div>
+        <div class="time-detail">{{ stats.timeTracked }} minutes total</div>
+      </div>
+    </p-card>
+
+    <p-card header="Active Goals" class="stat-card">
+      <div class="stat-content">
+        <div class="stat-number">{{ stats.activeGoals }}</div>
+        <div class="stat-label">In Progress</div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="chart-section">
+    <p-card header="Progress Overview">
+      <p-chart type="bar" [data]="chartData" [options]="chartOptions" class="progress-chart"></p-chart>
+    </p-card>
+  </div>
+</div>
