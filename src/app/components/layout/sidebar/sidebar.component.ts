@@ -1,12 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Drawer } from 'primeng/drawer';
-import { Button } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [Drawer, Button],
+  imports: [Drawer],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
