@@ -2,13 +2,16 @@
   [(visible)]="visible" 
   position="left"
   [modal]="true"
-  (onHide)="onSidebarHide()">
+  (onHide)="onSidebarHide()"
+  styleClass="custom-sidebar">
   
-  <div class="sidebar-header">
-    <h3>Navigation</h3>
-  </div>
+  <ng-template pTemplate="header">
+    <div class="sidebar-header">
+      <h3>Daily Tracker</h3>
+    </div>
+  </ng-template>
 
   <div class="sidebar-content">
-    <p-menu [model]="menuItems" styleClass="sidebar-menu"></p-menu>
+    <p-panelMenu [model]="menuItems" styleClass="sidebar-panel-menu"></p-panelMenu>
   </div>
 </p-drawer>
