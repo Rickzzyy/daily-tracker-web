@@ -145,7 +145,40 @@ The application features intuitive navigation between different tracking categor
 5. **Notes** (`/notes`) - Note-taking and journaling interface
 6. **Goals** (`/goals`) - Goal setting and progress tracking
 
-Use the hamburger menu (☰) in the top-left corner to access the sidebar navigation and switch between sections.
+Use the hamburger menu (☰) in the top-left corner to access the modern sidebar navigation with organized sections:
+- **Overview**: Dashboard with analytics and insights
+- **Tracking**: Tasks, Habits, and Time Tracking
+- **Planning**: Notes and Goals management
+
+## UI Screenshots
+
+### Desktop View
+- **Dashboard**: Modern card-based layout with progress tracking
+  ![Dashboard](https://github.com/user-attachments/assets/4a18eabf-f7b1-4349-b69d-3bca88351b7c)
+
+- **Organized Sidebar Navigation**: PrimeNG PanelMenu with grouped sections
+  ![Sidebar Navigation](https://github.com/user-attachments/assets/5becd479-17a8-452a-b522-cae840eee248)
+
+- **Task Management**: Clean PrimeNG components with priority badges
+  ![Tasks Page](https://github.com/user-attachments/assets/f48d9b6f-5dc7-4539-9fd9-427b73e93416)
+
+### Mobile Responsive
+- **Mobile Dashboard**: Optimized for mobile devices
+  ![Mobile Dashboard](https://github.com/user-attachments/assets/f255f981-7176-4b62-baf1-1669e75a735b)
+
+## Recent Modernization Updates
+
+### ✨ Enhanced Navigation
+- **PrimeNG PanelMenu**: Replaced basic menu with organized, collapsible navigation
+- **Grouped Sections**: Navigation organized into Overview, Tracking, and Planning categories
+- **Modern Styling**: Enhanced CSS with smooth animations and hover effects
+- **Mobile Optimized**: Responsive drawer-style navigation for all screen sizes
+
+### 🎨 Design Improvements
+- **Consistent Theming**: All components use PrimeNG design tokens and CSS custom properties
+- **Modern UI Components**: Leverages latest PrimeNG v20 components throughout
+- **Enhanced Interactions**: Smooth transitions, hover effects, and accessibility improvements
+- **Visual Hierarchy**: Improved spacing, typography, and component organization
 
 ## Prerequisites
 
@@ -274,6 +307,29 @@ To connect to a real API:
 2. Add the component to the routing in `app.routes.ts`
 
 3. Import required PrimeNG modules in the component
+
+## PrimeNG Components Used
+
+### Navigation & Layout
+- **Drawer**: Modern sidebar navigation with modal overlay
+- **PanelMenu**: Organized, collapsible navigation menu with grouped sections
+- **Toolbar**: Clean header with branding and action buttons
+
+### Data Display & Input
+- **Card**: Consistent container component for all content sections
+- **ProgressBar**: Visual progress indicators for tasks, habits, and goals
+- **Chart**: Interactive charts for dashboard analytics
+- **Button**: Styled action buttons with icons and hover effects
+- **Badge**: Priority and status indicators
+- **Checkbox**: Task completion toggles
+
+### Forms & Dialogs
+- **Dialog**: Modal forms for adding new items
+- **InputText**: Text input fields with validation
+- **Textarea**: Multi-line text input for descriptions and notes
+- **InputNumber**: Numeric input controls
+- **DatePicker**: Date selection for deadlines and scheduling
+- **Select**: Dropdown selection for categories and options
 
 ### Styling Guidelines
 
