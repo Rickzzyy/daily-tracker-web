@@ -1,6 +1,6 @@
 # Daily Tracker Web - Angular Frontend
 
-A modern Angular web application for daily task tracking, habit monitoring, time management, and goal tracking. Built with Angular 20 and PrimeNG components.
+A modern Angular web application for daily task tracking, habit monitoring, time management, and goal tracking. Built with Angular 20 and PrimeNG components with enhanced UI/UX design.
 
 ![Daily Tracker Dashboard](https://github.com/user-attachments/assets/1e1502d5-0a24-4f55-a6ad-9fa0efedc2f9)
 
@@ -8,18 +8,41 @@ A modern Angular web application for daily task tracking, habit monitoring, time
 
 - **Dashboard**: Overview of daily progress with visual charts and statistics
 - **Task Management**: Create, manage, and track daily tasks with priorities
-- **Habit Tracking**: Monitor daily habits and track completion rates
-- **Time Tracking**: Log time spent on various activities
-- **Notes/Journal**: Keep track of daily notes and thoughts
-- **Goal Management**: Set and track progress on personal goals
+- **Habit Tracking**: Interactive habit monitoring with progress tracking, increment/decrement controls, and visual progress indicators
+- **Time Tracking**: Log time spent on various activities with categorized entries and daily summaries
+- **Notes/Journal**: Keep track of daily notes and thoughts (starter interface implemented)
+- **Goal Management**: Set and track progress on personal goals (starter interface implemented)
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Modern UI/UX**: Card-based layouts, progress circles, and intuitive navigation
+
+## Enhanced UI Features
+
+### Habit Tracking
+- **Interactive Progress Cards**: Each habit displays in a beautifully designed card with colored borders
+- **Real-time Progress**: Visual progress bars and percentage indicators that update instantly
+- **Increment/Decrement Controls**: Easy-to-use buttons to track daily progress
+- **Progress Circles**: Color-coded circular progress indicators showing completion status
+- **Habit Management**: Add new habits with customizable targets and units
+
+![Habit Tracking Interface](https://github.com/user-attachments/assets/d5502241-ff36-4de2-a09d-79e96716c4d1)
+
+### Time Tracking
+- **Daily Summary**: Prominent display of total time tracked today
+- **Activity Cards**: Clean card layouts for each time entry with category badges
+- **Time Formatting**: Human-readable time displays (e.g., "1h 30m")
+- **Category Classification**: Color-coded badges for different activity types
+
+### Navigation
+- **Sidebar Navigation**: Accessible drawer-style navigation for all sections
+- **Modern Header**: Clean toolbar with app branding and user controls
+- **Route-based Navigation**: Full routing support for all tracking categories
 
 ## Technology Stack
 
 - **Frontend Framework**: Angular 20
 - **UI Components**: PrimeNG 20
 - **Icons**: PrimeIcons
-- **Styling**: CSS with PrimeNG theming
+- **Styling**: CSS with PrimeNG theming and custom responsive design
 - **Charts**: Chart.js integration via PrimeNG
 - **HTTP Client**: Angular HttpClient for API communication
 
@@ -31,19 +54,32 @@ src/
 │   ├── components/
 │   │   ├── dashboard/          # Main dashboard with stats and charts
 │   │   ├── tasks/             # Task management components
-│   │   ├── habits/            # Habit tracking (planned)
-│   │   ├── time-tracking/     # Time logging (planned)
-│   │   ├── notes/             # Notes management (planned)
-│   │   ├── goals/             # Goal tracking (planned)
+│   │   ├── habits/            # Interactive habit tracking with progress controls
+│   │   ├── time-tracking/     # Time logging with categorized entries
+│   │   ├── notes/             # Notes management interface
+│   │   ├── goals/             # Goal tracking interface
 │   │   └── layout/
 │   │       ├── header/        # Top navigation bar
-│   │       └── sidebar/       # Side navigation menu
+│   │       └── sidebar/       # Side navigation menu (drawer-style)
 │   ├── models/
-│   │   └── tracking.models.ts # TypeScript interfaces
+│   │   └── tracking.models.ts # TypeScript interfaces for all data models
 │   ├── services/
 │   │   └── api.service.ts     # HTTP service for API calls
 │   └── environments/          # Environment configurations
 ```
+
+## Navigation Guide
+
+The application features intuitive navigation between different tracking categories:
+
+1. **Dashboard** (`/dashboard`) - Main overview with statistics and charts
+2. **Tasks** (`/tasks`) - Task management with checkbox controls and priority badges
+3. **Habits** (`/habits`) - Interactive habit tracking with progress indicators
+4. **Time Tracking** (`/time-tracking`) - Activity logging with time summaries
+5. **Notes** (`/notes`) - Note-taking and journaling interface
+6. **Goals** (`/goals`) - Goal setting and progress tracking
+
+Use the hamburger menu (☰) in the top-left corner to access the sidebar navigation and switch between sections.
 
 ## Prerequisites
 
@@ -167,10 +203,21 @@ Currently, the application uses mock data for demonstration. To connect to a rea
 
 ### Styling Guidelines
 
-- Use PrimeNG's built-in CSS custom properties for theming
-- Follow the existing component structure and naming conventions
-- Ensure responsive design using CSS Grid and Flexbox
-- Use PrimeNG's severity classes for consistent styling
+- **PrimeNG Theming**: Use PrimeNG's built-in CSS custom properties for consistent theming
+- **Component Structure**: Follow the established pattern with container, header, and grid/content sections
+- **Responsive Design**: Utilize CSS Grid and Flexbox for responsive layouts that work on all screen sizes
+- **Card-based Layout**: Use PrimeNG Card components for consistent visual hierarchy
+- **Color Consistency**: Use PrimeNG's severity classes and CSS custom properties for consistent styling
+- **Interactive Elements**: Implement hover effects and smooth transitions for better user experience
+- **Progress Indicators**: Use visual progress bars and circles to show completion status
+- **Spacing**: Maintain consistent padding and margins using CSS custom properties
+
+### Component Architecture
+
+- **Standalone Components**: All new components use Angular's standalone architecture
+- **Modular Imports**: Import only necessary PrimeNG modules to keep bundle size optimized
+- **Reactive Updates**: Use Angular's reactive patterns for real-time UI updates
+- **TypeScript Interfaces**: Define clear data models for type safety and better development experience
 
 ## Building for Production
 

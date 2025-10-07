@@ -22,10 +22,8 @@ import { ApiService } from '../../services/api.service';
     Button, 
     ProgressBar, 
     Badge, 
-    Checkbox, 
     Dialog, 
     InputText, 
-    Select, 
     InputNumber
   ],
   templateUrl: './habits.html',

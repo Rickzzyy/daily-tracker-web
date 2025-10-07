@@ -38,9 +38,7 @@
       <div class="habit-progress">
         <p-progressBar 
           [value]="getHabitProgress(habit)"
-          [style.height]="'8px'"
-          [style.background-color]="habit.color + '20'"
-          [style.color]="habit.color">
+          [style.height]="'8px'">
         </p-progressBar>
         <div class="progress-details">
           <span>{{ getHabitEntryValue(habit.id) }} / {{ habit.target }} {{ habit.unit }}</span>
@@ -71,17 +69,17 @@
     </p-card>
   </div>
 
-  <!-- Add Habit Dialog -->
+  <!-- Simplified Add Habit Dialog -->
   <p-dialog 
     header="Add New Habit" 
     [(visible)]="showAddDialog" 
     [modal]="true" 
     [closable]="true"
-    [style]="{ width: '500px' }">
+    [style]="{ width: '400px' }">
     
     <div class="habit-form">
       <div class="form-field">
-        <label for="habit-name">Habit Name *</label>
+        <label for="habit-name">Habit Name</label>
         <input 
           pInputText 
           id="habit-name"
@@ -90,52 +88,22 @@
       </div>
 
       <div class="form-field">
-        <label for="habit-description">Description</label>
-        <input 
-          pInputText 
-          id="habit-description"
-          [(ngModel)]="newHabit.description" 
-          placeholder="Brief description of the habit">
-      </div>
-
-      <div class="form-row">
-        <div class="form-field">
-          <label for="habit-frequency">Frequency *</label>
-          <p-select 
-            id="habit-frequency"
-            [(ngModel)]="newHabit.frequency"
-            [options]="frequencyOptions"
-            placeholder="Select frequency">
-          </p-select>
-        </div>
-
-        <div class="form-field">
-          <label for="habit-target">Target *</label>
-          <p-inputNumber 
-            id="habit-target"
-            [(ngModel)]="newHabit.target"
-            [min]="1"
-            [max]="1000">
-          </p-inputNumber>
-        </div>
-
-        <div class="form-field">
-          <label for="habit-unit">Unit</label>
-          <input 
-            pInputText 
-            id="habit-unit"
-            [(ngModel)]="newHabit.unit" 
-            placeholder="e.g., minutes, glasses">
-        </div>
+        <label for="habit-target">Target</label>
+        <p-inputNumber 
+          id="habit-target"
+          [(ngModel)]="newHabit.target"
+          [min]="1"
+          [max]="1000">
+        </p-inputNumber>
       </div>
 
       <div class="form-field">
-        <label for="habit-color">Color</label>
+        <label for="habit-unit">Unit</label>
         <input 
           pInputText 
-          id="habit-color"
-          [(ngModel)]="newHabit.color"
-          placeholder="#4CAF50">
+          id="habit-unit"
+          [(ngModel)]="newHabit.unit" 
+          placeholder="e.g., minutes, glasses">
       </div>
     </div>
 
@@ -146,10 +114,9 @@
         (onClick)="showAddDialog = false">
       </p-button>
       <p-button 
-        label="Save Habit" 
+        label="Save" 
         severity="primary" 
-        (onClick)="saveHabit()"
-        [disabled]="!newHabit.name || !newHabit.target">
+        (onClick)="saveHabit()">
       </p-button>
     </ng-template>
   </p-dialog>

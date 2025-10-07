@@ -1,1 +1,38 @@
-<p>time-tracking works!</p>
+<div class="time-tracking-container">
+  <div class="time-tracking-header">
+    <h1>Time Tracking</h1>
+    <p>Track time spent on activities and projects</p>
+    <p-button 
+      label="Add Entry" 
+      icon="pi pi-plus" 
+      severity="primary">
+    </p-button>
+  </div>
+
+  <div class="time-stats">
+    <p-card header="Today's Summary">
+      <h2>{{ formatDuration(getTotalTimeToday()) }}</h2>
+      <p>Total time tracked today</p>
+    </p-card>
+  </div>
+
+  <div class="time-entries">
+    <h3>Recent Entries</h3>
+    <p-card *ngFor="let entry of timeEntries" class="time-entry-card">
+      <div class="entry-content">
+        <div class="entry-info">
+          <h4>{{ entry.activity }}</h4>
+          <p>{{ entry.description }}</p>
+          <small>{{ entry.startTime | date:'short' }} - {{ entry.endTime | date:'short' }}</small>
+        </div>
+        <div class="entry-meta">
+          <p-badge 
+            [value]="entry.category" 
+            [styleClass]="getCategoryBadgeClass(entry.category)">
+          </p-badge>
+          <span class="duration">{{ formatDuration(entry.duration || 0) }}</span>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>

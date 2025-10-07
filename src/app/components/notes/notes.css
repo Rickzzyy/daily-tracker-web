@@ -1,0 +1,44 @@
+.notes-container, .goals-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.notes-header, .goals-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.notes-header h1, .goals-header h1 {
+  color: var(--primary-color);
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.notes-header p, .goals-header p {
+  color: var(--text-color-secondary);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.notes-grid, .goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.notes-card, .goals-card {
+  text-align: center;
+  padding: 2rem;
+}
+
+.notes-card p, .goals-card p {
+  margin-bottom: 1.5rem;
+  color: var(--text-color-secondary);
+  font-size: 1.1rem;
+}

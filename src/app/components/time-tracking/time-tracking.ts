@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Card } from 'primeng/card';
 import { Button } from 'primeng/button';
-import { Dialog } from 'primeng/dialog';
-import { InputText } from 'primeng/inputtext';
-import { Select } from 'primeng/select';
 import { Badge } from 'primeng/badge';
 import { TimeEntry } from '../../models/tracking.models';
 import { ApiService } from '../../services/api.service';
@@ -17,9 +14,6 @@ import { ApiService } from '../../services/api.service';
     FormsModule, 
     Card, 
     Button, 
-    Dialog, 
-    InputText, 
-    Select, 
     Badge
   ],
   templateUrl: './time-tracking.html',
