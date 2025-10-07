@@ -12,33 +12,83 @@
   padding: 1rem 0;
 }
 
-.menu-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+/* PrimeNG Menu Styling */
+::ng-deep .sidebar-menu {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
 }
 
-.menu-item {
+::ng-deep .sidebar-menu .p-menu-list {
+  padding: 0;
+}
+
+::ng-deep .sidebar-menu .p-menuitem {
+  margin: 0.25rem 0.5rem;
+}
+
+::ng-deep .sidebar-menu .p-menuitem-link {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+  color: var(--text-color);
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  border-radius: 6px;
-  margin: 0 0.5rem;
 }
 
-.menu-item:hover {
+::ng-deep .sidebar-menu .p-menuitem-link:hover {
   background-color: var(--highlight-bg);
+  color: var(--primary-color);
 }
 
-.menu-icon {
+::ng-deep .sidebar-menu .p-menuitem-link:focus {
+  box-shadow: 0 0 0 2px var(--primary-color-text);
+}
+
+::ng-deep .sidebar-menu .p-menuitem-icon {
   margin-right: 0.75rem;
   font-size: 1.1rem;
   color: var(--primary-color);
 }
 
-.menu-label {
+::ng-deep .sidebar-menu .p-menuitem-text {
   font-weight: 500;
-  color: var(--text-color);
+}
+
+/* Active state styling */
+::ng-deep .sidebar-menu .p-menuitem-link.p-focus {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+::ng-deep .sidebar-menu .p-menuitem-link.p-focus .p-menuitem-icon {
+  color: var(--primary-color-text);
+}
+
+/* Active menu item styling (for current route) */
+::ng-deep .sidebar-menu .p-menuitem.active-menu-item .p-menuitem-link {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+  font-weight: 600;
+}
+
+::ng-deep .sidebar-menu .p-menuitem.active-menu-item .p-menuitem-link .p-menuitem-icon {
+  color: var(--primary-color-text);
+}
+
+::ng-deep .sidebar-menu .p-menuitem.active-menu-item .p-menuitem-link:hover {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .sidebar-header {
+    padding: 0.75rem;
+  }
+  
+  ::ng-deep .sidebar-menu .p-menuitem-link {
+    padding: 1rem;
+  }
 }
