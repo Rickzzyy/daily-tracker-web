@@ -1,85 +1,145 @@
 .sidebar-header {
   padding: 1rem;
   border-bottom: 1px solid var(--surface-border);
+  background: var(--surface-card);
 }
 
 .sidebar-header h3 {
   margin: 0;
   color: var(--primary-color);
+  font-weight: 600;
 }
 
 .sidebar-content {
   padding: 1rem 0;
+  background: var(--surface-card);
+  height: 100%;
 }
 
-/* PrimeNG Menu Styling */
-::ng-deep .sidebar-menu {
+/* PrimeNG Drawer Styling */
+::ng-deep .custom-sidebar {
+  width: 300px;
+  background: var(--surface-card);
+}
+
+::ng-deep .custom-sidebar .p-drawer-header {
+  display: none; /* We use custom header template */
+}
+
+/* PrimeNG PanelMenu Styling */
+::ng-deep .sidebar-panel-menu {
   border: none;
   box-shadow: none;
   background: transparent;
   padding: 0;
 }
 
-::ng-deep .sidebar-menu .p-menu-list {
+::ng-deep .sidebar-panel-menu .p-panelmenu-panel {
+  margin-bottom: 0;
+}
+
+::ng-deep .sidebar-panel-menu .p-panelmenu-header {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+::ng-deep .sidebar-panel-menu .p-panelmenu-header-link {
+  padding: 1rem;
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+  border-radius: 8px;
+  margin: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+::ng-deep .sidebar-panel-menu .p-panelmenu-header-link:hover {
+  background: var(--primary-600);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+::ng-deep .sidebar-panel-menu .p-panelmenu-content {
+  border: none;
+  background: transparent;
   padding: 0;
 }
 
-::ng-deep .sidebar-menu .p-menuitem {
-  margin: 0.25rem 0.5rem;
+::ng-deep .sidebar-panel-menu .p-panelmenu-content .p-menu {
+  border: none;
+  background: transparent;
+  padding: 0.5rem;
 }
 
-::ng-deep .sidebar-menu .p-menuitem-link {
+::ng-deep .sidebar-panel-menu .p-menuitem {
+  margin: 0.25rem 0;
+}
+
+::ng-deep .sidebar-panel-menu .p-menuitem-link {
   padding: 0.75rem 1rem;
   border-radius: 6px;
-  transition: background-color 0.2s, color 0.2s;
+  transition: all 0.2s ease;
   color: var(--text-color);
   display: flex;
   align-items: center;
+  margin: 0 0.5rem;
 }
 
-::ng-deep .sidebar-menu .p-menuitem-link:hover {
+::ng-deep .sidebar-panel-menu .p-menuitem-link:hover {
   background-color: var(--highlight-bg);
   color: var(--primary-color);
+  transform: translateX(5px);
 }
 
-::ng-deep .sidebar-menu .p-menuitem-link:focus {
+::ng-deep .sidebar-panel-menu .p-menuitem-link:focus {
   box-shadow: 0 0 0 2px var(--primary-color-text);
 }
 
-::ng-deep .sidebar-menu .p-menuitem-icon {
+::ng-deep .sidebar-panel-menu .p-menuitem-icon {
   margin-right: 0.75rem;
   font-size: 1.1rem;
   color: var(--primary-color);
+  transition: color 0.2s ease;
 }
 
-::ng-deep .sidebar-menu .p-menuitem-text {
+::ng-deep .sidebar-panel-menu .p-menuitem-text {
   font-weight: 500;
+  transition: font-weight 0.2s ease;
 }
 
 /* Active state styling */
-::ng-deep .sidebar-menu .p-menuitem-link.p-focus {
+::ng-deep .sidebar-panel-menu .p-menuitem-link.p-focus {
   background-color: var(--primary-color);
   color: var(--primary-color-text);
+  transform: translateX(5px);
 }
 
-::ng-deep .sidebar-menu .p-menuitem-link.p-focus .p-menuitem-icon {
+::ng-deep .sidebar-panel-menu .p-menuitem-link.p-focus .p-menuitem-icon {
   color: var(--primary-color-text);
 }
 
 /* Active menu item styling (for current route) */
-::ng-deep .sidebar-menu .p-menuitem.active-menu-item .p-menuitem-link {
+::ng-deep .sidebar-panel-menu .p-menuitem.active-menu-item .p-menuitem-link {
   background-color: var(--primary-color);
   color: var(--primary-color-text);
   font-weight: 600;
+  transform: translateX(5px);
 }
 
-::ng-deep .sidebar-menu .p-menuitem.active-menu-item .p-menuitem-link .p-menuitem-icon {
+::ng-deep .sidebar-panel-menu .p-menuitem.active-menu-item .p-menuitem-link .p-menuitem-icon {
   color: var(--primary-color-text);
 }
 
-::ng-deep .sidebar-menu .p-menuitem.active-menu-item .p-menuitem-link:hover {
+::ng-deep .sidebar-panel-menu .p-menuitem.active-menu-item .p-menuitem-link:hover {
   background-color: var(--primary-color);
   color: var(--primary-color-text);
+}
+
+/* Animation for panel toggle */
+::ng-deep .sidebar-panel-menu .p-toggleable-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
 }
 
 /* Responsive improvements */
@@ -88,7 +148,16 @@
     padding: 0.75rem;
   }
   
-  ::ng-deep .sidebar-menu .p-menuitem-link {
+  ::ng-deep .custom-sidebar {
+    width: 280px;
+  }
+  
+  ::ng-deep .sidebar-panel-menu .p-menuitem-link {
     padding: 1rem;
+  }
+  
+  ::ng-deep .sidebar-panel-menu .p-panelmenu-header-link {
+    padding: 0.875rem;
+    margin: 0.25rem;
   }
 }

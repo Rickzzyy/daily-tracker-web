@@ -1,14 +1,14 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Drawer } from 'primeng/drawer';
-import { Menu } from 'primeng/menu';
+import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [Drawer, Menu, CommonModule],
+  imports: [Drawer, PanelMenuModule, CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -19,40 +19,61 @@ export class SidebarComponent implements OnInit {
   currentRoute = '';
   menuItems: MenuItem[] = [
     {
-      label: 'Dashboard',
-      icon: 'pi pi-home',
-      routerLink: ['/dashboard'],
-      command: () => this.onMenuItemClick(['/dashboard'])
+      label: 'Overview',
+      icon: 'pi pi-chart-line',
+      expanded: true,
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'pi pi-home',
+          routerLink: ['/dashboard'],
+          command: () => this.onMenuItemClick(['/dashboard'])
+        }
+      ]
     },
     {
-      label: 'Tasks',
-      icon: 'pi pi-check-square',
-      routerLink: ['/tasks'],
-      command: () => this.onMenuItemClick(['/tasks'])
+      label: 'Tracking',
+      icon: 'pi pi-list',
+      expanded: true,
+      items: [
+        {
+          label: 'Tasks',
+          icon: 'pi pi-check-square',
+          routerLink: ['/tasks'],
+          command: () => this.onMenuItemClick(['/tasks'])
+        },
+        {
+          label: 'Habits',
+          icon: 'pi pi-calendar',
+          routerLink: ['/habits'],
+          command: () => this.onMenuItemClick(['/habits'])
+        },
+        {
+          label: 'Time Tracking',
+          icon: 'pi pi-clock',
+          routerLink: ['/time-tracking'],
+          command: () => this.onMenuItemClick(['/time-tracking'])
+        }
+      ]
     },
     {
-      label: 'Habits',
-      icon: 'pi pi-calendar',
-      routerLink: ['/habits'],
-      command: () => this.onMenuItemClick(['/habits'])
-    },
-    {
-      label: 'Time Tracking',
-      icon: 'pi pi-clock',
-      routerLink: ['/time-tracking'],
-      command: () => this.onMenuItemClick(['/time-tracking'])
-    },
-    {
-      label: 'Notes',
-      icon: 'pi pi-file-edit',
-      routerLink: ['/notes'],
-      command: () => this.onMenuItemClick(['/notes'])
-    },
-    {
-      label: 'Goals',
-      icon: 'pi pi-flag',
-      routerLink: ['/goals'],
-      command: () => this.onMenuItemClick(['/goals'])
+      label: 'Planning',
+      icon: 'pi pi-bookmark',
+      expanded: true,
+      items: [
+        {
+          label: 'Notes',
+          icon: 'pi pi-file-edit',
+          routerLink: ['/notes'],
+          command: () => this.onMenuItemClick(['/notes'])
+        },
+        {
+          label: 'Goals',
+          icon: 'pi pi-flag',
+          routerLink: ['/goals'],
+          command: () => this.onMenuItemClick(['/goals'])
+        }
+      ]
     }
   ];
 
@@ -92,9 +113,12 @@ export class SidebarComponent implements OnInit {
   }
 
   private updateMenuItemStyles() {
-    this.menuItems = this.menuItems.map(item => ({
-      ...item,
-      styleClass: this.isActive(item.routerLink as string[]) ? 'active-menu-item' : ''
+    this.menuItems = this.menuItems.map(group => ({
+      ...group,
+      items: group.items?.map(item => ({
+        ...item,
+        styleClass: this.isActive(item.routerLink as string[]) ? 'active-menu-item' : ''
+      }))
     }));
   }
 }
