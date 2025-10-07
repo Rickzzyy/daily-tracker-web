@@ -1,22 +1,157 @@
 <div class="notes-container">
+  <!-- Header Section -->
   <div class="notes-header">
-    <h1>Notes & Journal</h1>
-    <p>Keep track of your daily thoughts and ideas</p>
-    <p-button 
-      label="Add Note" 
-      icon="pi pi-plus" 
-      severity="primary">
-    </p-button>
+    <div class="header-info">
+      <h1>Notes & Journal</h1>
+      <p>Keep track of your daily thoughts and ideas</p>
+    </div>
+    <div class="header-actions">
+      <p-button 
+        label="Add Note" 
+        icon="pi pi-plus" 
+        severity="primary"
+        (onClick)="showAddNoteDialog()">
+      </p-button>
+    </div>
   </div>
 
-  <div class="notes-grid">
-    <p-card header="My Daily Notes" class="notes-card">
-      <p>Start writing your first note to get organized!</p>
-      <p-button 
-        label="Get Started" 
-        icon="pi pi-pencil" 
-        severity="secondary">
-      </p-button>
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <p-card class="summary-card total">
+      <div class="summary-content">
+        <div class="summary-value">{{ totalNotesCount }}</div>
+        <div class="summary-label">Total Notes</div>
+        <div class="summary-icon">
+          <i class="pi pi-book"></i>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="summary-card recent">
+      <div class="summary-content">
+        <div class="summary-value">{{ recentNotesCount }}</div>
+        <div class="summary-label">This Week</div>
+        <div class="summary-icon">
+          <i class="pi pi-calendar"></i>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="summary-card tags">
+      <div class="summary-content">
+        <div class="summary-value">{{ uniqueTagsCount }}</div>
+        <div class="summary-label">Tags Used</div>
+        <div class="summary-icon">
+          <i class="pi pi-tags"></i>
+        </div>
+      </div>
     </p-card>
   </div>
+
+  <!-- Notes Grid -->
+  <div class="notes-grid">
+    <p-card 
+      *ngFor="let note of notes" 
+      class="note-card">
+      
+      <div class="note-header">
+        <h3 class="note-title">{{ note.title }}</h3>
+        <div class="note-actions">
+          <p-button 
+            icon="pi pi-trash" 
+            severity="danger"
+            size="small"
+            [text]="true"
+            (onClick)="deleteNote(note.id!)">
+          </p-button>
+        </div>
+      </div>
+
+      <div class="note-content">
+        <p>{{ formatContent(note.content) }}</p>
+      </div>
+
+      <div class="note-footer">
+        <div class="note-tags">
+          <p-badge 
+            *ngFor="let tag of note.tags"
+            [value]="tag" 
+            [styleClass]="getTagBadgeClass(tag)"
+            class="tag-badge">
+          </p-badge>
+        </div>
+        <div class="note-date">
+          <small>{{ note.createdAt | date:'medium' }}</small>
+          <small *ngIf="note.updatedAt && note.updatedAt !== note.createdAt">
+            (edited {{ note.updatedAt | date:'short' }})
+          </small>
+        </div>
+      </div>
+    </p-card>
+
+    <div *ngIf="notes.length === 0" class="no-notes">
+      <i class="pi pi-book"></i>
+      <h3>No notes yet</h3>
+      <p>Start writing your first note to get organized!</p>
+      <p-button 
+        label="Create Your First Note" 
+        icon="pi pi-plus" 
+        severity="primary"
+        (onClick)="showAddNoteDialog()">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Add Note Dialog -->
+  <p-dialog 
+    header="Add New Note" 
+    [(visible)]="showAddDialog" 
+    [modal]="true" 
+    [closable]="true"
+    [style]="{ width: '700px' }">
+    
+    <div class="note-form">
+      <div class="form-field">
+        <label for="title">Title *</label>
+        <input 
+          pInputText 
+          id="title"
+          [(ngModel)]="newNote.title" 
+          placeholder="e.g., Project Ideas for 2024">
+      </div>
+
+      <div class="form-field">
+        <label for="content">Content *</label>
+        <textarea 
+          pTextarea 
+          id="content"
+          [(ngModel)]="newNote.content" 
+          rows="8"
+          placeholder="Write your thoughts, ideas, or notes here...">
+        </textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="tags">Tags</label>
+        <input 
+          pInputText 
+          id="tags"
+          [(ngModel)]="newNote.tagsInput"
+          placeholder="Enter tags separated by commas (e.g., personal, work, ideas)">
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button 
+        label="Cancel" 
+        severity="secondary" 
+        (onClick)="showAddDialog = false">
+      </p-button>
+      <p-button 
+        label="Save Note" 
+        severity="primary" 
+        (onClick)="saveNote()">
+      </p-button>
+    </ng-template>
+  </p-dialog>
 </div>
