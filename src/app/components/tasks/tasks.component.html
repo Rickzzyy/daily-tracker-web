@@ -1,0 +1,52 @@
+<div class="tasks-container">
+  <div class="tasks-header">
+    <h1>Tasks</h1>
+    <p>Manage your daily tasks and to-dos</p>
+    <div class="tasks-summary">
+      <span class="summary-text">{{ completedTasksCount }}/{{ totalTasksCount }} completed</span>
+    </div>
+  </div>
+
+  <div class="tasks-list">
+    @for (task of tasks; track task.id) {
+      <p-card class="task-card" [ngClass]="{'completed-task': task.completed}">
+        <div class="task-content">
+          <div class="task-left">
+            <p-checkbox 
+              [(ngModel)]="task.completed" 
+              (onChange)="toggleTask(task)"
+              [binary]="true">
+            </p-checkbox>
+            <div class="task-details">
+              <h3 class="task-title" [ngClass]="{'completed': task.completed}">{{ task.title }}</h3>
+              <p class="task-description">{{ task.description }}</p>
+              @if (task.dueDate) {
+                <div class="task-due-date">
+                  Due: {{ task.dueDate | date:'short' }}
+                </div>
+              }
+            </div>
+          </div>
+          <div class="task-right">
+            <p-badge 
+              [value]="task.priority" 
+              [styleClass]="getPriorityBadgeClass(task.priority)">
+            </p-badge>
+          </div>
+        </div>
+      </p-card>
+    } @empty {
+      <p-card>
+        <div class="empty-state">
+          <h3>No tasks yet</h3>
+          <p>Add your first task to get started!</p>
+          <p-button label="Add Task" icon="pi pi-plus" severity="primary"></p-button>
+        </div>
+      </p-card>
+    }
+  </div>
+
+  <div class="tasks-actions">
+    <p-button label="Add New Task" icon="pi pi-plus" severity="primary"></p-button>
+  </div>
+</div>
