@@ -1,38 +1,215 @@
 <div class="time-tracking-container">
+  <!-- Header Section -->
   <div class="time-tracking-header">
-    <h1>Time Tracking</h1>
-    <p>Track time spent on activities and projects</p>
-    <p-button 
-      label="Add Entry" 
-      icon="pi pi-plus" 
-      severity="primary">
-    </p-button>
+    <div class="header-info">
+      <h1>Time Tracking</h1>
+      <p>Track time spent on activities and projects</p>
+    </div>
+    <div class="header-actions">
+      <p-button 
+        label="Add Entry" 
+        icon="pi pi-plus" 
+        severity="primary"
+        (onClick)="showAddEntryDialog()">
+      </p-button>
+      <p-button 
+        *ngIf="!isActiveTimer"
+        label="Start Timer" 
+        icon="pi pi-play" 
+        severity="success"
+        [outlined]="true">
+      </p-button>
+      <p-button 
+        *ngIf="isActiveTimer"
+        label="Stop Timer" 
+        icon="pi pi-stop" 
+        severity="danger"
+        (onClick)="stopTimer()">
+      </p-button>
+    </div>
   </div>
 
-  <div class="time-stats">
-    <p-card header="Today's Summary">
-      <h2>{{ formatDuration(getTotalTimeToday()) }}</h2>
-      <p>Total time tracked today</p>
-    </p-card>
-  </div>
-
-  <div class="time-entries">
-    <h3>Recent Entries</h3>
-    <p-card *ngFor="let entry of timeEntries" class="time-entry-card">
-      <div class="entry-content">
-        <div class="entry-info">
-          <h4>{{ entry.activity }}</h4>
-          <p>{{ entry.description }}</p>
-          <small>{{ entry.startTime | date:'short' }} - {{ entry.endTime | date:'short' }}</small>
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <p-card class="summary-card today">
+      <div class="summary-content">
+        <div class="summary-value">{{ formatDuration(getTotalTimeToday()) }}</div>
+        <div class="summary-label">Today</div>
+        <div class="summary-icon">
+          <i class="pi pi-calendar"></i>
         </div>
-        <div class="entry-meta">
-          <p-badge 
-            [value]="entry.category" 
-            [styleClass]="getCategoryBadgeClass(entry.category)">
-          </p-badge>
-          <span class="duration">{{ formatDuration(entry.duration || 0) }}</span>
+      </div>
+    </p-card>
+
+    <p-card class="summary-card week">
+      <div class="summary-content">
+        <div class="summary-value">{{ formatDuration(getTotalTimeThisWeek()) }}</div>
+        <div class="summary-label">This Week</div>
+        <div class="summary-icon">
+          <i class="pi pi-calendar-plus"></i>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="summary-card month">
+      <div class="summary-content">
+        <div class="summary-value">{{ formatDuration(getTotalTimeThisMonth()) }}</div>
+        <div class="summary-label">This Month</div>
+        <div class="summary-icon">
+          <i class="pi pi-chart-bar"></i>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="summary-card average">
+      <div class="summary-content">
+        <div class="summary-value">{{ getAverageTimePerDay() }}h</div>
+        <div class="summary-label">Daily Average</div>
+        <div class="summary-icon">
+          <i class="pi pi-clock"></i>
         </div>
       </div>
     </p-card>
   </div>
+
+  <!-- Charts Section -->
+  <div class="charts-grid">
+    <p-card header="Category Distribution" class="chart-card">
+      <p-chart 
+        type="doughnut" 
+        [data]="chartData" 
+        [options]="chartOptions"
+        height="300px">
+      </p-chart>
+    </p-card>
+
+    <p-card header="Daily Trend" class="chart-card">
+      <p-chart 
+        type="line" 
+        [data]="trendChartData" 
+        [options]="trendChartOptions"
+        height="300px">
+      </p-chart>
+    </p-card>
+  </div>
+
+  <!-- Time Entries Section -->
+  <div class="entries-section">
+    <p-card header="Recent Entries" class="entries-card">
+      <div class="entries-list">
+        <div 
+          *ngFor="let entry of timeEntries.slice(0, 10)" 
+          class="entry-item">
+          
+          <div class="entry-main">
+            <div class="entry-info">
+              <h4 class="entry-activity">{{ entry.activity }}</h4>
+              <p class="entry-description">{{ entry.description }}</p>
+              <div class="entry-time">
+                <small>{{ entry.startTime | date:'short' }} - {{ entry.endTime | date:'short' }}</small>
+              </div>
+            </div>
+            
+            <div class="entry-meta">
+              <p-badge 
+                [value]="entry.category" 
+                [styleClass]="getCategoryBadgeClass(entry.category)">
+              </p-badge>
+              <div class="entry-duration">{{ formatDuration(entry.duration || 0) }}</div>
+              <div class="entry-actions">
+                <p-button 
+                  icon="pi pi-trash" 
+                  severity="danger"
+                  [text]="true"
+                  size="small"
+                  (onClick)="deleteEntry(entry.id!)">
+                </p-button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div *ngIf="timeEntries.length === 0" class="no-entries">
+          <i class="pi pi-clock"></i>
+          <p>No time entries yet. Start tracking your activities!</p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Add Entry Dialog -->
+  <p-dialog 
+    header="Add Time Entry" 
+    [(visible)]="showAddDialog" 
+    [modal]="true" 
+    [closable]="true"
+    [style]="{ width: '500px' }">
+    
+    <div class="entry-form">
+      <div class="form-field">
+        <label for="activity">Activity *</label>
+        <input 
+          pInputText 
+          id="activity"
+          [(ngModel)]="newEntry.activity" 
+          placeholder="e.g., Project Development">
+      </div>
+
+      <div class="form-field">
+        <label for="category">Category *</label>
+        <p-select 
+          id="category"
+          [(ngModel)]="newEntry.category"
+          [options]="categoryOptions"
+          placeholder="Select category">
+        </p-select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="startTime">Start Time *</label>
+          <p-datePicker 
+            id="startTime"
+            [(ngModel)]="newEntry.startTime"
+            [showTime]="true"
+            [showSeconds]="false">
+          </p-datePicker>
+        </div>
+
+        <div class="form-field">
+          <label for="endTime">End Time</label>
+          <p-datePicker 
+            id="endTime"
+            [(ngModel)]="newEntry.endTime"
+            [showTime]="true"
+            [showSeconds]="false">
+          </p-datePicker>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="description">Description</label>
+        <textarea 
+          pTextarea 
+          id="description"
+          [(ngModel)]="newEntry.description" 
+          rows="3"
+          placeholder="Optional details about the activity">
+        </textarea>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button 
+        label="Cancel" 
+        severity="secondary" 
+        (onClick)="showAddDialog = false">
+      </p-button>
+      <p-button 
+        label="Save" 
+        severity="primary" 
+        (onClick)="saveEntry()">
+      </p-button>
+    </ng-template>
+  </p-dialog>
 </div>
