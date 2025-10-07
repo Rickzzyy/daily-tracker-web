@@ -1,22 +1,217 @@
 <div class="goals-container">
+  <!-- Header Section -->
   <div class="goals-header">
-    <h1>Goal Management</h1>
-    <p>Set and track progress on your personal goals</p>
-    <p-button 
-      label="Add Goal" 
-      icon="pi pi-plus" 
-      severity="primary">
-    </p-button>
+    <div class="header-info">
+      <h1>Goal Management</h1>
+      <p>Set and track progress on your personal goals</p>
+    </div>
+    <div class="header-actions">
+      <p-button 
+        label="Add Goal" 
+        icon="pi pi-plus" 
+        severity="primary"
+        (onClick)="showAddGoalDialog()">
+      </p-button>
+    </div>
   </div>
 
-  <div class="goals-grid">
-    <p-card header="My Goals" class="goals-card">
-      <p>Create your first goal to start tracking your progress!</p>
-      <p-button 
-        label="Set Goal" 
-        icon="pi pi-flag" 
-        severity="secondary">
-      </p-button>
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <p-card class="summary-card active">
+      <div class="summary-content">
+        <div class="summary-value">{{ activeGoalsCount }}</div>
+        <div class="summary-label">Active Goals</div>
+        <div class="summary-icon">
+          <i class="pi pi-flag"></i>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="summary-card completed">
+      <div class="summary-content">
+        <div class="summary-value">{{ completedGoalsCount }}</div>
+        <div class="summary-label">Completed</div>
+        <div class="summary-icon">
+          <i class="pi pi-check-circle"></i>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="summary-card progress">
+      <div class="summary-content">
+        <div class="summary-value">{{ averageProgress }}%</div>
+        <div class="summary-label">Average Progress</div>
+        <div class="summary-icon">
+          <i class="pi pi-chart-line"></i>
+        </div>
+      </div>
     </p-card>
   </div>
+
+  <!-- Goals Grid -->
+  <div class="goals-grid">
+    <p-card 
+      *ngFor="let goal of goals" 
+      class="goal-card"
+      [ngClass]="'status-' + goal.status">
+      
+      <div class="goal-header">
+        <div class="goal-info">
+          <h3 class="goal-title">{{ goal.title }}</h3>
+          <p class="goal-description">{{ goal.description }}</p>
+        </div>
+        <div class="goal-status">
+          <p-badge 
+            [value]="goal.status" 
+            [styleClass]="getStatusBadgeClass(goal.status)">
+          </p-badge>
+        </div>
+      </div>
+
+      <div class="goal-meta">
+        <div class="goal-category">
+          <p-badge 
+            [value]="goal.category" 
+            [styleClass]="getCategoryBadgeClass(goal.category)">
+          </p-badge>
+        </div>
+        <div class="goal-deadline" *ngIf="goal.targetDate">
+          <i class="pi pi-calendar"></i>
+          <span>{{ getDaysRemaining(goal.targetDate) }} days left</span>
+        </div>
+      </div>
+
+      <div class="goal-progress">
+        <div class="progress-header">
+          <span class="progress-label">Progress</span>
+          <span class="progress-percentage">{{ goal.progress }}%</span>
+        </div>
+        <p-progressBar 
+          [value]="goal.progress"
+          [style.height]="'12px'"
+          [style.border-radius]="'6px'">
+        </p-progressBar>
+      </div>
+
+      <div class="goal-actions" *ngIf="goal.status === 'active'">
+        <p-button 
+          icon="pi pi-minus" 
+          severity="secondary"
+          size="small"
+          [text]="true"
+          (onClick)="updateGoalProgress(goal, -10)"
+          [disabled]="goal.progress <= 0">
+        </p-button>
+        <span class="progress-controls">{{ goal.progress }}%</span>
+        <p-button 
+          icon="pi pi-plus" 
+          severity="primary"
+          size="small"
+          [text]="true"
+          (onClick)="updateGoalProgress(goal, 10)"
+          [disabled]="goal.progress >= 100">
+        </p-button>
+        <p-button 
+          icon="pi pi-trash" 
+          severity="danger"
+          size="small"
+          [text]="true"
+          (onClick)="deleteGoal(goal.id!)">
+        </p-button>
+      </div>
+
+      <div class="goal-completed" *ngIf="goal.status === 'completed'">
+        <i class="pi pi-check-circle"></i>
+        <span>Goal Completed!</span>
+      </div>
+    </p-card>
+
+    <div *ngIf="goals.length === 0" class="no-goals">
+      <i class="pi pi-flag"></i>
+      <h3>No goals yet</h3>
+      <p>Create your first goal to start tracking your progress!</p>
+      <p-button 
+        label="Set Your First Goal" 
+        icon="pi pi-plus" 
+        severity="primary"
+        (onClick)="showAddGoalDialog()">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Add Goal Dialog -->
+  <p-dialog 
+    header="Add New Goal" 
+    [(visible)]="showAddDialog" 
+    [modal]="true" 
+    [closable]="true"
+    [style]="{ width: '600px' }">
+    
+    <div class="goal-form">
+      <div class="form-field">
+        <label for="title">Goal Title *</label>
+        <input 
+          pInputText 
+          id="title"
+          [(ngModel)]="newGoal.title" 
+          placeholder="e.g., Complete Angular Certification">
+      </div>
+
+      <div class="form-field">
+        <label for="description">Description *</label>
+        <textarea 
+          pTextarea 
+          id="description"
+          [(ngModel)]="newGoal.description" 
+          rows="3"
+          placeholder="Describe your goal and why it's important to you...">
+        </textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="category">Category</label>
+          <p-select 
+            id="category"
+            [(ngModel)]="newGoal.category"
+            [options]="categoryOptions"
+            placeholder="Select category">
+          </p-select>
+        </div>
+
+        <div class="form-field">
+          <label for="targetDate">Target Date</label>
+          <p-datePicker 
+            id="targetDate"
+            [(ngModel)]="newGoal.targetDate"
+            [showTime]="false">
+          </p-datePicker>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="progress">Initial Progress</label>
+        <p-inputNumber 
+          id="progress"
+          [(ngModel)]="newGoal.progress"
+          [min]="0"
+          [max]="100"
+          suffix="%">
+        </p-inputNumber>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button 
+        label="Cancel" 
+        severity="secondary" 
+        (onClick)="showAddDialog = false">
+      </p-button>
+      <p-button 
+        label="Create Goal" 
+        severity="primary" 
+        (onClick)="saveGoal()">
+      </p-button>
+    </ng-template>
+  </p-dialog>
 </div>
