@@ -1,0 +1,123 @@
+<div class="habits-container">
+  <div class="habits-header">
+    <h1>Habit Tracking</h1>
+    <p>Build and maintain positive daily habits</p>
+    <div class="header-actions">
+      <p-button 
+        label="Add New Habit" 
+        icon="pi pi-plus" 
+        severity="primary"
+        (onClick)="showAddHabitDialog()">
+      </p-button>
+    </div>
+  </div>
+
+  <div class="habits-grid">
+    <p-card class="habit-card" 
+            *ngFor="let habit of habits; trackBy: trackByHabitId"
+            [ngClass]="'habit-' + getHabitStatus(habit)"
+            [style.border-left-color]="habit.color">
+      
+      <div class="habit-header">
+        <div class="habit-info">
+          <h3 class="habit-name">{{ habit.name }}</h3>
+          <p class="habit-description">{{ habit.description }}</p>
+          <div class="habit-meta">
+            <p-badge 
+              [value]="habit.frequency" 
+              severity="secondary">
+            </p-badge>
+            <span class="habit-target">Target: {{ habit.target }} {{ habit.unit }}</span>
+          </div>
+        </div>
+        <div class="habit-progress-circle" [style.color]="habit.color">
+          <span class="progress-value">{{ getHabitProgress(habit) | number:'1.0-0' }}%</span>
+        </div>
+      </div>
+
+      <div class="habit-progress">
+        <p-progressBar 
+          [value]="getHabitProgress(habit)"
+          [style.height]="'8px'">
+        </p-progressBar>
+        <div class="progress-details">
+          <span>{{ getHabitEntryValue(habit.id) }} / {{ habit.target }} {{ habit.unit }}</span>
+        </div>
+      </div>
+
+      <div class="habit-actions">
+        <p-button 
+          icon="pi pi-minus" 
+          severity="secondary"
+          size="small"
+          [text]="true"
+          (onClick)="updateHabitValue(habit, -1)"
+          [disabled]="isDecrementDisabled(habit.id)">
+        </p-button>
+        <span class="current-value">
+          {{ getHabitEntryValue(habit.id) }}
+        </span>
+        <p-button 
+          icon="pi pi-plus" 
+          severity="primary"
+          size="small"
+          [text]="true"
+          (onClick)="updateHabitValue(habit, 1)"
+          [disabled]="isIncrementDisabled(habit)">
+        </p-button>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Simplified Add Habit Dialog -->
+  <p-dialog 
+    header="Add New Habit" 
+    [(visible)]="showAddDialog" 
+    [modal]="true" 
+    [closable]="true"
+    [style]="{ width: '400px' }">
+    
+    <div class="habit-form">
+      <div class="form-field">
+        <label for="habit-name">Habit Name</label>
+        <input 
+          pInputText 
+          id="habit-name"
+          [(ngModel)]="newHabit.name" 
+          placeholder="e.g., Morning Exercise">
+      </div>
+
+      <div class="form-field">
+        <label for="habit-target">Target</label>
+        <p-inputNumber 
+          id="habit-target"
+          [(ngModel)]="newHabit.target"
+          [min]="1"
+          [max]="1000">
+        </p-inputNumber>
+      </div>
+
+      <div class="form-field">
+        <label for="habit-unit">Unit</label>
+        <input 
+          pInputText 
+          id="habit-unit"
+          [(ngModel)]="newHabit.unit" 
+          placeholder="e.g., minutes, glasses">
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button 
+        label="Cancel" 
+        severity="secondary" 
+        (onClick)="showAddDialog = false">
+      </p-button>
+      <p-button 
+        label="Save" 
+        severity="primary" 
+        (onClick)="saveHabit()">
+      </p-button>
+    </ng-template>
+  </p-dialog>
+</div>

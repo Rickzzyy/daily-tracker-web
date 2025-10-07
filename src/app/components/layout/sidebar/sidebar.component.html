@@ -10,12 +10,12 @@
 
   <div class="sidebar-content">
     <div class="menu-section">
-      @for (item of menuItems; track item.label) {
-        <div class="menu-item" (click)="onMenuItemClick(item)">
-          <i [class]="item.icon" class="menu-icon"></i>
-          <span class="menu-label">{{ item.label }}</span>
-        </div>
-      }
+      <div class="menu-item" 
+           *ngFor="let item of menuItems; trackBy: trackByLabel"
+           (click)="onMenuItemClick(item)">
+        <i [class]="item.icon" class="menu-icon"></i>
+        <span class="menu-label">{{ item.label }}</span>
+      </div>
     </div>
   </div>
 </p-drawer>

@@ -2,10 +2,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Drawer } from 'primeng/drawer';
 import { MenuItem } from 'primeng/api';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [Drawer],
+  imports: [Drawer, CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -57,5 +58,9 @@ export class SidebarComponent {
       this.router.navigate(item.routerLink);
       this.onSidebarHide();
     }
+  }
+
+  trackByLabel(index: number, item: MenuItem): string {
+    return item.label || '';
   }
 }

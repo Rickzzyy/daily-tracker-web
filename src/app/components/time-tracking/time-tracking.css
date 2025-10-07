@@ -1,0 +1,89 @@
+.time-tracking-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.time-tracking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.time-tracking-header h1 {
+  color: var(--primary-color);
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.time-tracking-header p {
+  color: var(--text-color-secondary);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.time-stats {
+  margin-bottom: 2rem;
+}
+
+.time-stats h2 {
+  color: var(--primary-color);
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.time-entries h3 {
+  color: var(--text-color);
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+}
+
+.time-entry-card {
+  margin-bottom: 1rem;
+}
+
+.entry-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.entry-info {
+  flex: 1;
+}
+
+.entry-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color);
+  font-size: 1.1rem;
+}
+
+.entry-info p {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color-secondary);
+  font-size: 0.9rem;
+}
+
+.entry-info small {
+  color: var(--text-color-secondary);
+  font-size: 0.8rem;
+}
+
+.entry-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.duration {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
